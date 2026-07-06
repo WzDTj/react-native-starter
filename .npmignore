@@ -1,0 +1,7 @@
+template/android/.gradle/
+template/android/**/.gradle/
+template/android/**/.cxx/
+template/android/**/build/
+template/ios/Pods/
+template/ios/build/
+template/ios/.xcode.env.local

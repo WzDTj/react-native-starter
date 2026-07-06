@@ -1,4 +1,4 @@
-# create-rn-starter 设计方案
+# create-react-native-app 设计方案
 
 ## 背景
 
@@ -17,7 +17,7 @@
 目标命令：
 
 ```sh
-npx create-rn-starter my-app
+npx create-react-native-app my-app
 ```
 
 CLI 对缺失信息进行交互式提示：
@@ -50,7 +50,7 @@ react-native-starter/
   package.json
   README.md
   bin/
-    create-rn-starter.js
+    create-react-native-app.js
   src/
     cli.ts
     prompts.ts
