@@ -15,6 +15,21 @@ export async function runOptionalCommands(options: GenerateOptions): Promise<voi
 
   if (options.initGit) {
     await run('git', ['init', '--quiet'], options.targetDir);
+    await run('git', ['add', '--all'], options.targetDir);
+    await run(
+      'git',
+      [
+        '-c',
+        'user.name=Create React Native App',
+        '-c',
+        'user.email=create-react-native-app@example.invalid',
+        'commit',
+        '--quiet',
+        '-m',
+        'feat: first commit',
+      ],
+      options.targetDir,
+    );
   }
 }
 

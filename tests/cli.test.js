@@ -31,6 +31,17 @@ test('CLI creates a project with yes-mode, skips installs, and initializes git',
       displayName: 'DemoApp',
     });
     await fs.access(path.join(target, '.git'));
+    const status = await execFileAsync('git', ['status', '--short'], { cwd: target });
+    assert.equal(status.stdout, '');
+    const log = await execFileAsync('git', ['log', '--oneline', '--decorate=no'], { cwd: target });
+    assert.deepEqual(
+      log.stdout
+        .trim()
+        .split('\n')
+        .filter(Boolean)
+        .map(line => line.replace(/^[0-9a-f]+ /, '')),
+      ['feat: first commit'],
+    );
     await assert.rejects(() => fs.access(path.join(target, 'node_modules')), /ENOENT/);
     await assert.rejects(() => fs.access(path.join(target, 'ios/Pods')), /ENOENT/);
   } finally {
