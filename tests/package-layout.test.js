@@ -11,4 +11,6 @@ test('root package exposes the create-react-native-app CLI package layout', () =
   assert.equal(pkg.bin['create-react-native-app'], './bin/create-react-native-app.js');
   assert.equal(fs.existsSync(path.join(process.cwd(), 'bin/create-react-native-app.js')), true);
   assert.equal(fs.existsSync(path.join(process.cwd(), 'template/package.json')), true);
+  assert.equal(fs.existsSync(path.join(process.cwd(), 'template/gitignore')), true);
+  assert.equal(fs.existsSync(path.join(process.cwd(), 'template/.gitignore')), false);
 });

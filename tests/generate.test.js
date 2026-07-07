@@ -10,6 +10,18 @@ async function read(projectDir, relativePath) {
   return fs.readFile(path.join(projectDir, relativePath), 'utf8');
 }
 
+async function pathExists(projectDir, relativePath) {
+  try {
+    await fs.access(path.join(projectDir, relativePath));
+    return true;
+  } catch (error) {
+    if (error && error.code === 'ENOENT') {
+      return false;
+    }
+    throw error;
+  }
+}
+
 test('generates a renamed React Native project from the bundled template', async () => {
   const root = await fs.mkdtemp(path.join(os.tmpdir(), 'create-react-native-app-'));
   const target = path.join(root, 'my-app');
@@ -33,6 +45,12 @@ test('generates a renamed React Native project from the bundled template', async
       name: 'MyApp',
       displayName: 'MyApp',
     });
+    assert.match(await read(target, '.gitignore'), /node_modules\//);
+    assert.match(await read(target, '.watchmanconfig'), /^\{\}\s*$/);
+    assert.match(await read(target, '.eslintrc.js'), /extends: '@react-native'/);
+    assert.match(await read(target, '.prettierrc.js'), /singleQuote: true/);
+    assert.match(await read(target, '.bundle/config'), /BUNDLE_PATH: "vendor\/bundle"/);
+    assert.equal(await pathExists(target, 'gitignore'), false);
     assert.match(await read(target, 'src/navigation/RootNavigator.tsx'), /title: 'MyApp'/);
     assert.match(await read(target, 'src/screens/HomeScreen.tsx'), />MyApp</);
     assert.match(await read(target, 'android/settings.gradle'), /rootProject.name = 'MyApp'/);

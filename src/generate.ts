@@ -1,4 +1,4 @@
-import { cp, mkdir } from 'node:fs/promises';
+import { cp, mkdir, rename } from 'node:fs/promises';
 import path from 'node:path';
 import { runOptionalCommands } from './install';
 import { renameTemplate } from './rename';
@@ -19,10 +19,15 @@ export async function generateProject(options: GenerateOptions): Promise<void> {
     force: false,
     errorOnExist: true,
   });
+  await materializeTemplateDotfiles(options.targetDir);
   await renameTemplate(options.targetDir, options);
   await runOptionalCommands(options);
 }
 
 export function templateDir(): string {
   return path.resolve(__dirname, '../template');
+}
+
+async function materializeTemplateDotfiles(targetDir: string): Promise<void> {
+  await rename(path.join(targetDir, 'gitignore'), path.join(targetDir, '.gitignore'));
 }
