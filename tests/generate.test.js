@@ -46,6 +46,10 @@ test('generates a renamed React Native project from the bundled template', async
       displayName: 'MyApp',
     });
     assert.match(await read(target, '.gitignore'), /node_modules\//);
+    assert.match(await read(target, 'mise.toml'), /node = "22\.22\.3"/);
+    assert.match(await read(target, 'mise.toml'), /ruby = "2\.6\.10"/);
+    assert.doesNotMatch(await read(target, 'mise.toml'), /\[env\]/);
+    assert.doesNotMatch(await read(target, 'mise.toml'), /\[tasks\./);
     assert.match(await read(target, '.watchmanconfig'), /^\{\}\s*$/);
     assert.match(await read(target, '.eslintrc.js'), /extends: '@react-native'/);
     assert.match(await read(target, '.prettierrc.js'), /singleQuote: true/);

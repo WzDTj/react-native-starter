@@ -26,6 +26,9 @@ test('CLI creates a project with yes-mode, skips installs, and initializes git',
     ]);
 
     assert.match(result.stdout, /Created DemoApp/);
+    assert.match(result.stdout, /mise install/);
+    assert.doesNotMatch(result.stdout, /mise trust/);
+    assert.doesNotMatch(result.stdout, /mise run/);
     assert.deepEqual(JSON.parse(await fs.readFile(path.join(target, 'app.json'), 'utf8')), {
       name: 'DemoApp',
       displayName: 'DemoApp',

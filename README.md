@@ -36,6 +36,7 @@ After generation:
 
 ```sh
 cd my-app
+mise install
 npm install
 cd ios && bundle install && bundle exec pod install && cd ..
 npm run ios

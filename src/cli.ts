@@ -32,6 +32,9 @@ export async function runCli(argv = process.argv.slice(2)): Promise<void> {
   console.log(`Created ${options.displayName} at ${targetDir}`);
   console.log('');
   console.log(`cd ${path.relative(process.cwd(), targetDir) || targetDir}`);
+  console.log('mise install');
+  console.log('npm install');
+  console.log('cd ios && bundle install && bundle exec pod install && cd ..');
   console.log('npm run ios');
   console.log('npm run android');
 }
